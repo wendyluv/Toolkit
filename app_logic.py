@@ -71,6 +71,8 @@ def content_reformatter(content):
 def evaluator(inputs):
 	global TRUTH_TABLE_VARS
 	global KEYS
+	for k in KEYS:
+		TRUTH_TABLE_VARS[k] =False
 	results = []
 	for i in range(1,1+2**len(KEYS)):
 		results.append(eval(inputs,TRUTH_TABLE_VARS))
@@ -87,6 +89,8 @@ def evaluator(inputs):
 def variables_columns_generator():
 	global TRUTH_TABLE_VARS
 	global KEYS
+	for k in KEYS:
+		TRUTH_TABLE_VARS[k] =False
 	values = []
 	for i in range(1,1+2**len(KEYS)):
 		values.append([])
