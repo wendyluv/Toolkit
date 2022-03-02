@@ -1,15 +1,33 @@
 """
 All functions and logic of the app must be defined here
+
+*********************************************************
+EDITED BY GWENDELINE OROZCO ON MAR 2 2022
+CHANGES
+ADDED THRUTH TABLE LOGIC
+def __content_generator(string)
+def __content_reformatter(content)
+def __evaluator(inputs)
+def __variables_columns_generator()
+def __build_Table( Main_columns, inputs):
+def generate_truth_table(expression)
+*********************************************************
+
 """
+
 TRUTH_TABLE_VARS = {}
 KEYS=[]
 ORIGINAL_EXPRESSION = None
-def content_generator(string):
+
+
+#INTERNAL FUNCTION DONT USE
+def __content_generator(string):
 	global ORIGINAL_EXPRESSION 
 	ORIGINAL_EXPRESSION = string
 	content = []
 	global TRUTH_TABLE_VARS
 	global KEYS
+	###ELIMINATES MULTICHARACTER OPERATIONS
 	for i in range(2,len(string)):
 		if(string[i-2]=="-" and string[i-1]==">"):
 			if(content[-1]!="d"):
@@ -24,13 +42,18 @@ def content_generator(string):
 	content.append(string[len(string)-1])
 	while(">"in content):
 		content.remove(">")
+	#SERACHES FOR ALL THE ACTIVE VARIABLES TU EVALUATE IN THE THRUTH TABLE
 	for ltr in content:
 		if ltr in['p','q','r','s','t']:
 			TRUTH_TABLE_VARS[ltr] = False
 	KEYS = list(TRUTH_TABLE_VARS.keys())
 	return content
 
-def content_reformatter(content):
+
+
+#INTERNAL FUNCTION DONT USE
+def __content_reformatter(content):
+	#TRANSLATES LOGICAL OPERATORS
 	for i in range(len(content)):
 		if(content[i] == "^"):
 			content[i] = " and "
@@ -44,6 +67,7 @@ def content_reformatter(content):
 	out = []
 	title = []
 	prev = 0
+	#TRANSLATES IMPLICATIONS AND EVALUATES MID-SIZE EXPRESSIONS
 	for i in range(len(content)):
 		if(content[i] == "i"):	
 			title.append("".join(content[prev:i]))
@@ -52,23 +76,25 @@ def content_reformatter(content):
 			content[0] = " not(  "+content[0]
 			content[i-1] +=  " ) "
 			content[i] = " or "
-			
 		elif(content[i] == "d"):
 			title.append("".join(content[prev:i]))
 			out.append(evaluator("".join(content[prev:i])))
 			prev = i+1
 			content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
 		else: pass
+	#EVALUATES LAST MID-SIZE EXPRESSION
 	title.append("".join(content[prev:len(content)]))
 	out.append(evaluator("".join(content[prev:len(content)])))
+	#EVALUATES THE WHOLE EXPRESSION
 	final_expression = "".join(content)
 	title.append(final_expression)
 	out.append(evaluator(final_expression))
 	return title, out
 
 
-
-def evaluator(inputs):
+#INTERNAL FUNCTION DONT USE
+###EVALUATES AN (INPUT)STRING USING EVAL RETURNS A LIST WITH ALL CASES
+def __evaluator(inputs):
 	global TRUTH_TABLE_VARS
 	global KEYS
 	for k in KEYS:
@@ -85,8 +111,9 @@ def evaluator(inputs):
 			TRUTH_TABLE_VARS[key] = not TRUTH_TABLE_VARS[key]
 		
 	return results
-	
-def variables_columns_generator():
+
+#INTERNAL FUNCTION DONT USE	
+def __variables_columns_generator():
 	global TRUTH_TABLE_VARS
 	global KEYS
 	for k in KEYS:
@@ -105,7 +132,9 @@ def variables_columns_generator():
 			TRUTH_TABLE_VARS[key] = not TRUTH_TABLE_VARS[key]
 	return values
 
-def build_Table( Main_columns, inputs):
+
+#INTERNAL FUNCTION DONT USE, ASSEMBLES THE TABLE FROM MINOR ELEMENTS
+def __build_Table( Main_columns, inputs):
 	table = KEYS[:]
 	titles, results = inputs
 	titles[-1] = ORIGINAL_EXPRESSION
@@ -117,13 +146,24 @@ def build_Table( Main_columns, inputs):
 	table+= Main_columns
 	
 	return table
-
+'''
+Recieves a logical expression, returns its truth table with the following format 
+[
+[HEADERS], 
+[VALUES],
+[VAlUES].
+...
+]
+'''
+def generate_truth_table(expression):
+	content = content_generator(expression)
+	inputs = content_reformatter(content)
+	Main_columns = variables_columns_generator()
+	table = build_Table(Main_columns,inputs)
+	return table
 
 if __name__ == "__main__":
 	string = input()
-	content = content_generator(string)
-	inputs = content_reformatter(content)
-	Main_columns = variables_columns_generator()
-	table = build_Table(Main_columns,inputs) 
+	table = generate_truth_table(string)
 	for row in table:
 		print(row)
