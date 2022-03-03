@@ -42,6 +42,9 @@ def __content_generator(string):
 	content.append(string[len(string)-1])
 	while(">"in content):
 		content.remove(">")
+		
+	while("-"in content):
+		content.remove("-")
 	#SERACHES FOR ALL THE ACTIVE VARIABLES TU EVALUATE IN THE THRUTH TABLE
 	for ltr in content:
 		if ltr in['p','q','r','s','t']:
@@ -71,24 +74,24 @@ def __content_reformatter(content):
 	for i in range(len(content)):
 		if(content[i] == "i"):	
 			title.append("".join(content[prev:i]))
-			out.append(evaluator("".join(content[prev:i])))
+			out.append(__evaluator("".join(content[prev:i])))
 			prev = i+1 	
 			content[0] = " not(  "+content[0]
 			content[i-1] +=  " ) "
 			content[i] = " or "
 		elif(content[i] == "d"):
 			title.append("".join(content[prev:i]))
-			out.append(evaluator("".join(content[prev:i])))
+			out.append(__evaluator("".join(content[prev:i])))
 			prev = i+1
 			content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
 		else: pass
 	#EVALUATES LAST MID-SIZE EXPRESSION
 	title.append("".join(content[prev:len(content)]))
-	out.append(evaluator("".join(content[prev:len(content)])))
+	out.append(__evaluator("".join(content[prev:len(content)])))
 	#EVALUATES THE WHOLE EXPRESSION
 	final_expression = "".join(content)
 	title.append(final_expression)
-	out.append(evaluator(final_expression))
+	out.append(__evaluator(final_expression))
 	return title, out
 
 
@@ -155,15 +158,19 @@ Recieves a logical expression, returns its truth table with the following format
 ...
 ]
 '''
+
 def generate_truth_table(expression):
-	content = content_generator(expression)
-	inputs = content_reformatter(content)
-	Main_columns = variables_columns_generator()
-	table = build_Table(Main_columns,inputs)
+	global TRUTH_TABLE_VARS, KEYS, ORIGINAL_EXPRESSION
+	TRUTH_TABLE_VARS = {}
+	KEYS=[]
+	ORIGINAL_EXPRESSION = None
+	content = __content_generator(expression)
+	inputs = __content_reformatter(content)
+	Main_columns = __variables_columns_generator()
+	table = __build_Table(Main_columns,inputs)
 	return table
 
 if __name__ == "__main__":
 	string = input()
 	table = generate_truth_table(string)
-	for row in table:
-		print(row)
+	
