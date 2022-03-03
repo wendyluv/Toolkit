@@ -1,18 +1,5 @@
 """
 All functions and logic of the app must be defined here
-
-*********************************************************
-EDITED BY GWENDELINE OROZCO ON MAR 2 2022
-CHANGES
-ADDED THRUTH TABLE LOGIC
-def __content_generator(string)
-def __content_reformatter(content)
-def __evaluator(inputs)
-def __variables_columns_generator()
-def __build_Table( Main_columns, inputs):
-def generate_truth_table(expression)
-*********************************************************
-
 """
 
 TRUTH_TABLE_VARS = {}
