@@ -7,8 +7,6 @@ CREATED AND MAINTAINED BY ANDRES QUIROZ
 
 """
 
-from cgitb import text
-from sqlite3 import Row
 import tkinter as tk
 from app_logic import generate_truth_table
 
@@ -55,7 +53,7 @@ def truth_table_generator_widgets():
         
 
     def change_text(text):
-        main_entry.insert(0, text)
+        main_entry.insert(tk.END, text)
 
 
     current_option_menu = "truth_table"
