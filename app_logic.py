@@ -76,20 +76,26 @@ def __content_reformatter(content):
 		if(content[i] == "i"):	
 			top = i
 			bot = i
-			while(content[top]!= ")"):
-				top+=1
-			while(content[bot]!= "("):
-				bot-=1
 			
 			prev = i+1 	
 			content[0] = " not(  "+content[0]
 			content[i-1] +=  " ) "
 			content[i] = " or "
+			while(content[top]!= ")"):
+				top+=1
+			while(content[bot]!= "("):
+				bot-=1
 			title.append("".join(content[bot:top+1]))
 			out.append(__evaluator("".join(content[bot:top+1])))
 		elif(content[i] == "d"):
 			top = i
 			bot = i
+
+			prev = 0
+			content[0]= "( not ( "+ content[0]
+			content[i]= " "
+			content[i-1]+= " ) or not ( "
+			content[-1] += " ))"
 			while(content[top]!= ")"):
 				top+=1
 			top +=1
@@ -100,11 +106,6 @@ def __content_reformatter(content):
 			bot -=1
 			while(content[bot]!= "("):
 				bot-=1 
-			prev = 0
-			content[0]= "( not ( "+ content[0]
-			content[i]= " "
-			content[i-1]+= " ) or not ( "
-			content[-1] += " ))"
 			title.append("".join(content[bot:top+1]))
 			out.append(__evaluator("".join(content[bot:top+1])))
 			#content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
