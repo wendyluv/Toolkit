@@ -81,10 +81,13 @@ def __content_reformatter(content):
 			content[i-1] +=  " ) "
 			content[i] = " or "
 		elif(content[i] == "d"):
-			title.append("".join(content[prev:i]))
-			out.append(__evaluator("".join(content[prev:i])))
-			prev = i+1
-			content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
+			#title.append("".join(content[prev:i]))
+			#out.append(__evaluator("".join(content[prev:i])))
+			content[0]= "( not ( "+ content[0]
+			content[i]= " "
+			content[i-1]+= " ) or not ( "
+			content[-1] += " ))"
+			#content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
 		else: pass
 	#EVALUATES LAST MID-SIZE EXPRESSION
 	title.append("".join(content[prev:len(content)]))
