@@ -99,7 +99,6 @@ def __content_reformatter(content):
 			except: pass
 			#content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
 		'''
-		else: pass
 	#EVALUATES LAST MID-SIZE EXPRESSION
 	title.append("".join(content[prev:len(content)]))
 	out.append(__evaluator("".join(content[prev:len(content)])))
