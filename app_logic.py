@@ -74,7 +74,7 @@ def __content_reformatter(content):
 	#TRANSLATES IMPLICATIONS AND EVALUATES MID-SIZE EXPRESSIONS
 	for i in range(len(content)):
 		if(content[i] == "i"):	
-			content[0] = " not(  "+content[0]
+			content[0] = " (not  "+content[0]
 			content[i-1] +=  " ) "
 			content[i] = " or "
 			try:		
