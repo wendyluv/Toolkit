@@ -76,9 +76,9 @@ def __content_reformatter(content):
 		if(content[i] == "i"):	
 			top = i
 			bot = i
-			while(content(top)!= ")"):
+			while(content[top]!= ")"):
 				top+=1
-			while(content(bot)!= "("):
+			while(content[bot]!= "("):
 				bot-=1
 			title.append("".join(content[bot:top]))
 			out.append(__evaluator("".join(content[bot:top])))
@@ -89,15 +89,15 @@ def __content_reformatter(content):
 		elif(content[i] == "d"):
 			top = i
 			bot = i
-			while(content(top)!= ")"):
+			while(content[top]!= ")"):
 				top+=1
 			top +=1
-			while(content(top)!= ")"):
+			while(content[top]!= ")"):
 				top+=1
-			while(content(bot)!= "("):
+			while(content[bot]!= "("):
 				bot-=1 
 			bot -=1
-			while(content(bot)!= "("):
+			while(content[bot]!= "("):
 				bot-=1 
 			title.append("".join(content[bot:top]))
 			out.append(__evaluator("".join(content[bot:top])))
