@@ -31,7 +31,7 @@ def __content_generator(string):
 	###ELIMINATES MULTICHARACTER OPERATIONS
 	for i in range(2,len(string)):
 		if(string[i-2]=="-" and string[i-1]==">"):
-			if(content[-1]!="d"):
+			if(content[-1]!=" is "):
 				content.append("i");
 			else:
 				continue
