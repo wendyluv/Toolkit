@@ -1,5 +1,10 @@
 """
 Main entrance of app and UI logic
+
+*********************************************************
+CREATED AND MAINTAINED BY ANDRES QUIROZ
+*********************************************************
+
 """
 
 from cgitb import text
