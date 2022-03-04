@@ -81,7 +81,7 @@ def __content_reformatter(content):
 				out.append(__evaluator("".join(content[0:i])))
 				title.append("".join(content[0:i]))
 
-				prev = i
+				prev = i +1
 			except:
 				pass
 		elif(content[i] == "d"):
@@ -94,7 +94,7 @@ def __content_reformatter(content):
 				out.append(__evaluator("".join(content[0-1])))
 				title.append("".join(content[0:-1]))
 
-				prev = i
+				prev = i +1
 			except: pass
 			#content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
 		else: pass
