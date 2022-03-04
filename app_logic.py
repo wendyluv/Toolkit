@@ -74,15 +74,33 @@ def __content_reformatter(content):
 	#TRANSLATES IMPLICATIONS AND EVALUATES MID-SIZE EXPRESSIONS
 	for i in range(len(content)):
 		if(content[i] == "i"):	
-			title.append("".join(content[prev:i]))
-			out.append(__evaluator("".join(content[prev:i])))
+			top = i
+			bot = i
+			while(content(top)!= ")"):
+				top+=1
+			while(content(bot)!= "("):
+				bot-=1
+			title.append("".join(content[bot:top]))
+			out.append(__evaluator("".join(content[bot:top])))
 			prev = i+1 	
 			content[0] = " not(  "+content[0]
 			content[i-1] +=  " ) "
 			content[i] = " or "
 		elif(content[i] == "d"):
-			#title.append("".join(content[prev:i]))
-			#out.append(__evaluator("".join(content[prev:i])))
+			top = i
+			bot = i
+			while(content(top)!= ")"):
+				top+=1
+			top +=1
+			while(content(top)!= ")"):
+				top+=1
+			while(content(bot)!= "("):
+				bot-=1 
+			bot -=1
+			while(content(bot)!= "("):
+				bot-=1 
+			title.append("".join(content[bot:top]))
+			out.append(__evaluator("".join(content[bot:top])))
 			prev = 0
 			content[0]= "( not ( "+ content[0]
 			content[i]= " "
@@ -100,25 +118,9 @@ def __content_reformatter(content):
 	return title, out
 
 
-def __set_space_between_parenthesis(inputs):
-	output = ""
-	for c in inputs:
-		if c == "(":
-			output += c
-			output += " "
-		elif c == ")":
-			output += " "
-			output += c
-		else:
-			output += c
-	
-	return output
-		
-
 #INTERNAL FUNCTION DONT USE
 ###EVALUATES AN (INPUT)STRING USING EVAL RETURNS A LIST WITH ALL CASES
 def __evaluator(inputs):
-	inputs = __set_space_between_parenthesis(inputs)
 	global TRUTH_TABLE_VARS
 	global KEYS
 	for k in KEYS:
