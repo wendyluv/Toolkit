@@ -83,6 +83,7 @@ def __content_reformatter(content):
 		elif(content[i] == "d"):
 			#title.append("".join(content[prev:i]))
 			#out.append(__evaluator("".join(content[prev:i])))
+			prev = 0
 			content[0]= "( not ( "+ content[0]
 			content[i]= " "
 			content[i-1]+= " ) or not ( "
