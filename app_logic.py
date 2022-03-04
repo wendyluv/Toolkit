@@ -15,7 +15,6 @@ def generate_truth_table(expression)
 """
 
 
-"""
 
 TRUTH_TABLE_VARS = {}
 KEYS=[]

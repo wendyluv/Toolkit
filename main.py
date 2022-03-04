@@ -76,11 +76,17 @@ def truth_table_generator_widgets():
     tk.Button(button_container, text="s", width=5, height=2, command=lambda:change_text("s")).grid(row=1, column=3)
     tk.Button(button_container, text="t", width=5, height=2, command=lambda:change_text("t")).grid(row=1, column=4)
 
-    tk.Button(button_container, text="^", width=5, height=2, command=lambda:change_text("^")).grid(row=2, column=0)
-    tk.Button(button_container, text="v", width=5, height=2, command=lambda:change_text("v")).grid(row=2, column=1)
-    tk.Button(button_container, text="~", width=5, height=2, command=lambda:change_text("~")).grid(row=2, column=2)
-    tk.Button(button_container, text="->", width=5, height=2, command=lambda:change_text("->")).grid(row=2, column=3)
-    tk.Button(button_container, text="<->", width=5, height=2, command=lambda:change_text("<->")).grid(row=2, column=4)
+    tk.Button(button_container, text="u", width=5, height=2, command=lambda:change_text("u")).grid(row=2, column=0)
+    tk.Button(button_container, text="w", width=5, height=2, command=lambda:change_text("w")).grid(row=2, column=1)
+    tk.Button(button_container, text="x", width=5, height=2, command=lambda:change_text("x")).grid(row=2, column=2)
+    tk.Button(button_container, text="y", width=5, height=2, command=lambda:change_text("y")).grid(row=2, column=3)
+    tk.Button(button_container, text="z", width=5, height=2, command=lambda:change_text("z")).grid(row=2, column=4)
+
+    tk.Button(button_container, text="^", width=5, height=2, command=lambda:change_text("^")).grid(row=3, column=0)
+    tk.Button(button_container, text="v", width=5, height=2, command=lambda:change_text("v")).grid(row=3, column=1)
+    tk.Button(button_container, text="~", width=5, height=2, command=lambda:change_text("~")).grid(row=3, column=2)
+    tk.Button(button_container, text="->", width=5, height=2, command=lambda:change_text("->")).grid(row=3, column=3)
+    tk.Button(button_container, text="<->", width=5, height=2, command=lambda:change_text("<->")).grid(row=3, column=4)
 
 
 
