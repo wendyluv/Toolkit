@@ -99,9 +99,25 @@ def __content_reformatter(content):
 	return title, out
 
 
+def __set_space_between_parenthesis(inputs):
+	output = ""
+	for c in inputs:
+		if c == "(":
+			output += c
+			output += " "
+		elif c == ")":
+			output += " "
+			output += c
+		else:
+			output += c
+	
+	return output
+		
+
 #INTERNAL FUNCTION DONT USE
 ###EVALUATES AN (INPUT)STRING USING EVAL RETURNS A LIST WITH ALL CASES
 def __evaluator(inputs):
+	inputs = __set_space_between_parenthesis(inputs)
 	global TRUTH_TABLE_VARS
 	global KEYS
 	for k in KEYS:
