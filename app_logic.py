@@ -84,6 +84,7 @@ def __content_reformatter(content):
 				prev = i +1
 			except:
 				pass
+		'''
 		elif(content[i] == "d"):
 			
 			content[0]= "( not ( "+ content[0]
@@ -97,6 +98,7 @@ def __content_reformatter(content):
 				prev = i +1
 			except: pass
 			#content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
+		'''
 		else: pass
 	#EVALUATES LAST MID-SIZE EXPRESSION
 	title.append("".join(content[prev:len(content)]))
