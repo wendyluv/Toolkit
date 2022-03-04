@@ -74,24 +74,26 @@ def __content_reformatter(content):
 	#TRANSLATES IMPLICATIONS AND EVALUATES MID-SIZE EXPRESSIONS
 	for i in range(len(content)):
 		if(content[i] == "i"):	
-		
-			prev = i+1 	
 			content[0] = " not(  "+content[0]
 			content[i-1] +=  " ) "
 			content[i] = " or "
-		
-			title.append("".join(content[0:i-1]))
-			out.append(__evaluator("".join(content[0:i-1])))
+			try:		
+				title.append("".join(content[0:i]))
+				out.append(__evaluator("".join(content[0:i])))
+				prev = i
+			except:
+				pass
 		elif(content[i] == "d"):
 			
-			prev = 0
 			content[0]= "( not ( "+ content[0]
 			content[i]= " "
 			content[i-1]+= " ) or not ( "
 			content[-1] += " ))"
-			
-			#title.append("".join(content[0:-1]))
-			#out.append(__evaluator("".join(content[0-1])))
+			try:
+				title.append("".join(content[0:-1]))
+				out.append(__evaluator("".join(content[0-1])))
+				prev = i
+			except: pass
 			#content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
 		else: pass
 	#EVALUATES LAST MID-SIZE EXPRESSION
