@@ -36,7 +36,7 @@ def __content_generator(string):
 			else:
 				continue
 		elif(string[i-2]=="<" and string[i-1]=="-" and string[i] == ">"):
-			content.append("d");
+			content.append(" is ");
 		else:
 			content.append(string[i-2])
 	content.append(string[len(string)-2])
