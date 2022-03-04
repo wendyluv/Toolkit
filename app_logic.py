@@ -49,7 +49,7 @@ def __content_generator(string):
 		content.remove("-")
 	#SERACHES FOR ALL THE ACTIVE VARIABLES TU EVALUATE IN THE THRUTH TABLE
 	for ltr in content:
-		if ltr in['p','q','r','s','t']:
+		if ltr in['p','q','r','s','t','u','w','x','y','z']:
 			TRUTH_TABLE_VARS[ltr] = False
 	KEYS = list(TRUTH_TABLE_VARS.keys())
 	return content
