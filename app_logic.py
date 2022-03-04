@@ -85,8 +85,8 @@ def __content_reformatter(content):
 			content[0] = " not(  "+content[0]
 			content[i-1] +=  " ) "
 			content[i] = " or "
-			title.append("".join(content[bot:top]))
-			out.append(__evaluator("".join(content[bot:top])))
+			title.append("".join(content[bot:top+1]))
+			out.append(__evaluator("".join(content[bot:top+1])))
 		elif(content[i] == "d"):
 			top = i
 			bot = i
@@ -105,8 +105,8 @@ def __content_reformatter(content):
 			content[i]= " "
 			content[i-1]+= " ) or not ( "
 			content[-1] += " ))"
-			title.append("".join(content[bot:top]))
-			out.append(__evaluator("".join(content[bot:top])))
+			title.append("".join(content[bot:top+1]))
+			out.append(__evaluator("".join(content[bot:top+1])))
 			#content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
 		else: pass
 	#EVALUATES LAST MID-SIZE EXPRESSION
