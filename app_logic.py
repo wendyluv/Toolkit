@@ -1,4 +1,4 @@
-"""
+'''
 All functions and logic of the app must be defined here
 
 *********************************************************
@@ -12,7 +12,7 @@ def __variables_columns_generator()
 def __build_Table( Main_columns, inputs):
 def generate_truth_table(expression)
 *********************************************************
-"""
+'''
 
 
 
