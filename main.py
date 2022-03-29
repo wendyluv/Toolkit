@@ -12,16 +12,103 @@ from app_logic import generate_truth_table
 
 current_option_menu = None
 
+
+def clear_main_area():
+    global main_area
+    for widgets in main_area.winfo_children():
+        widgets.destroy()
+
+def sets_widgets():
+    """
+    Function that renders the widgets of the sets operations part
+    """
+
+    global main_area, current_option_menu, main_area
+
+    if current_option_menu == "sets_operation": # we are already in the option
+        return
+    
+    clear_main_area()
+    current_option_menu = "sets_operation"
+    
+    def execute_set_action(action):
+        """
+        Executes the set action based on the parameter
+
+        HERE WE REFERENCE 'app_logic.py' TO CALL LOGIC
+        """
+        pass
+
+    
+    # instructions label
+
+    ins_label = tk.Label(main_area, text="""
+        Introduce los elementos en los conjuntos de tu preferencia (puedes dejar un conjunto vacio,
+            no se tomará en cuenta), IMPORTANTE, usa comas para separar los elementos del conjunto y no uses
+            otros caracteres fuera de los alfanuméricos
+        """)
+    
+    ins_label.pack()
+
+
+    operations_grid = tk.Frame(main_area, width=500, height=500)
+
+    title_set_a = tk.Label(operations_grid, text="A = {")
+    title_set_a.grid(row=0, column=0)
+
+    set_a_entry_text = tk.StringVar()
+    set_a = tk.Entry(operations_grid, textvariable=set_a_entry_text)
+    set_a.grid(row=0, column=1)
+
+    end_title_set_a = tk.Label(operations_grid, text="}")
+    end_title_set_a.grid(row=0, column=2)
+
+    title_set_b = tk.Label(operations_grid, text="B = {")
+    title_set_b.grid(row=1, column=0)
+
+    set_b_entry_text = tk.StringVar()
+    set_b = tk.Entry(operations_grid, textvariable=set_b_entry_text)
+    set_b.grid(row=1, column=1)
+
+    end_title_set_b = tk.Label(operations_grid, text="}")
+    end_title_set_b.grid(row=1, column=2)
+
+    title_set_c = tk.Label(operations_grid, text="C = {")
+    title_set_c.grid(row=2, column=0)
+
+    set_c_entry_text = tk.StringVar()
+    set_c = tk.Entry(operations_grid, textvariable=set_c_entry_text)
+    set_c.grid(row=2, column=1)
+
+    end_title_set_c = tk.Label(operations_grid, text="}")
+    end_title_set_c.grid(row=2, column=2)
+
+    operations_grid.pack()
+
+
+    # buttons
+
+    button_container = tk.Frame(main_area, width=500, height=500)
+    button_container.pack(pady=10)
+
+    tk.Button(button_container, text="∪", width=5, height=2, command=lambda:execute_set_action("u")).grid(row=0, column=0, pady=5, padx=5)
+    tk.Button(button_container, text="∩", width=5, height=2, command=lambda:execute_set_action("i")).grid(row=0, column=1, pady=5, padx=5)
+    tk.Button(button_container, text="≠", width=5, height=2, command=lambda:execute_set_action("d")).grid(row=1, column=0, pady=5, padx=5)
+    tk.Button(button_container, text="Δ", width=5, height=2, command=lambda:execute_set_action("ds")).grid(row=1, column=1, pady=5, padx=5)
+
+
+
 def truth_table_generator_widgets():
     """
     Function that packs all the widgets of the truth table generator
     section of the app
     """
-    global main_area, current_option_menu
+    global main_area, current_option_menu, main_area
 
     if current_option_menu == "truth_table": # we are already in the option
         return
 
+    clear_main_area()
     table_container = tk.Frame(main_area, width=500, height=500)
    
     def generate_table_tkinter():
@@ -115,6 +202,7 @@ tk.Label(headbar, text="Tablify", bg="#CCC", font=('Arial', 15)).grid(row=0,colu
 
 # sidebar buttons
 tk.Button(sidebar, command=truth_table_generator_widgets, text="Generador tablas de verdad", bg="green", relief="flat").grid(row=0, column=0)
+tk.Button(sidebar, command=sets_widgets, text="Operaciones con conjuntos", bg="green", relief="flat").grid(row=1, column=0)
 
 main()
 
