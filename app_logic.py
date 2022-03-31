@@ -184,6 +184,140 @@ def generate_truth_table(expression):
 	table = __build_Table(Main_columns,inputs)
 	return table
 
+
+
+
+
+# ===================== Sets
+
+def __get_union(set_a, set_b):
+	output = set(set_a.copy())
+	for elem in set_b:
+		output.add(elem)
+	
+	return list(output)
+
+def __get_difference(set_a, set_b):
+	output = set(set_a.copy())
+
+	for elem in set_b:
+		if elem in output:
+			output.remove(elem)
+	
+	return list(output)
+
+def __get_intersection(set_a, set_b):
+	output = set(set_a.copy())
+
+	for elem in set_a:
+		if elem not in set_b:
+			output.remove(elem)
+	
+	return list(output)
+
+def __get_symetric_difference(set_a, set_b):
+	return __get_union(__get_difference(set_a, set_b), __get_difference(set_b, set_a))
+
+
+def union(set_a, set_b, set_c):
+
+	output = {}
+	if set_a and set_b and set_c:
+		output['A ∪ (B ∪ C)'] =  __get_union(__get_union(set_a, set_b), set_c)
+	else:
+		if set_a:
+			if set_b:
+				output['A ∪ B'] =  __get_union(set_a, set_b)
+			elif set_c:
+				output['A ∪ C'] =  __get_union(set_a, set_c)
+		
+		elif set_b:
+			output['B ∪ C'] =  __get_union(set_a, set_c)
+		
+		else:
+			# sets are incomplete
+			return -1
+	
+	return output
+
+
+def intersection(set_a, set_b, set_c):
+
+	output = {}
+	if set_a and set_b and set_c:
+		output['A ∩ (B ∩ C)'] =  __get_intersection(__get_intersection(set_a, set_b), set_c)
+	else:
+		if set_a:
+			if set_b:
+				output['A ∩ B'] =  __get_intersection(set_a, set_b)
+			elif set_c:
+				output['A ∩ C'] =  __get_intersection(set_a, set_c)
+		
+		elif set_b:
+			output['B ∩ C'] =  __get_intersection(set_a, set_c)
+		
+		else:
+			# sets are incomplete
+			return -1
+	
+	return output
+
+
+def difference(set_a, set_b, set_c):
+	
+	output = {}
+
+	if set_a:
+		# difference between set b and set c
+		if set_c:
+			output["A - C"] = __get_difference(set_a, set_c)
+		if set_b:
+			output["A - B"] = __get_difference(set_a, set_b)
+	elif set_b:
+		# difference between set a and set c
+		if set_a:
+			output["A - B"] = __get_difference(set_a, set_b)
+		if set_c:
+			output["B - C"] = __get_difference(set_b, set_c)
+	if set_c:
+		# difference between set a and set b
+		if set_a:
+			output["A - C"] = __get_difference(set_a, set_c)
+		if set_b:
+			output["B - C"] = __get_difference(set_b, set_c)
+	
+	return output
+
+	
+
+def symetric_difference(set_a, set_b, set_c):
+
+	output = {}
+
+
+	if set_a:
+		# difference between set b and set c
+		if set_c:
+			output["A Δ C"] = __get_symetric_difference(set_a, set_c)
+		if set_b:
+			output["A Δ B"] = __get_symetric_difference(set_a, set_b)
+	elif set_b:
+		# difference between set a and set c
+		if set_a:
+			output["A Δ B"] = __get_symetric_difference(set_a, set_b)
+		if set_c:
+			output["B Δ C"] = __get_symetric_difference(set_b, set_c)
+	if set_c:
+		# difference between set a and set b
+		if set_a:
+			output["A Δ C"] = __get_symetric_difference(set_a, set_c)
+		if set_b:
+			output["B Δ C"] = __get_symetric_difference(set_b, set_c)
+	
+	return output
+
+	
+
 if __name__ == "__main__":
 	string = input()
 	table = generate_truth_table(string)

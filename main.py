@@ -8,7 +8,9 @@ CREATED AND MAINTAINED BY ANDRES QUIROZ
 """
 
 import tkinter as tk
-from app_logic import generate_truth_table
+
+from pyparsing import col
+from app_logic import generate_truth_table, difference, union, intersection, symetric_difference
 
 current_option_menu = None
 
@@ -30,14 +32,58 @@ def sets_widgets():
     
     clear_main_area()
     current_option_menu = "sets_operation"
+    res_grid = tk.Frame(main_area, width=500, height=500)
     
     def execute_set_action(action):
+        # global set_a_entry_text, set_b_entry_text, set_c_entry_text
         """
         Executes the set action based on the parameter
 
         HERE WE REFERENCE 'app_logic.py' TO CALL LOGIC
         """
-        pass
+        set_a = set(set_a_entry_text.get().split(','))
+        set_b = set(set_b_entry_text.get().split(','))
+        set_c = set(set_c_entry_text.get().split(','))
+
+        if len(set_a) == 1 and '' in set_a:
+            set_a = {}
+        if len(set_b) == 1 and '' in set_b:
+            set_b = {}
+        if len(set_c) == 1 and '' in set_c:
+            set_c = {}
+        
+        print(set_a)
+        print(set_b)
+        print(len(set_c))
+        
+        res = {}
+
+        if action == "u":
+            res = union(set_a, set_b, set_c)
+        elif action == "i":
+            res = intersection(set_a, set_b, set_c)
+        elif action == "d":
+            res = difference(set_a, set_b, set_c)
+        else:
+            res = symetric_difference(set_a, set_b, set_c)
+        
+        # print result
+
+        res_grid.pack()
+
+        for i in range(len(res.keys())):
+            key = list(res.keys())[i]
+
+            key_entry = tk.Entry(res_grid)
+            key_entry.insert(0, key)
+            key_entry.grid(row=i,column=0)
+
+            value_entry = tk.Entry(res_grid)
+            value_entry.insert(0, res[key])
+            value_entry.grid(row=i,column=1)
+
+
+            
 
     
     # instructions label
