@@ -1,17 +1,15 @@
 """
 Main entrance of app and UI logic
-
 *********************************************************
 CREATED AND MAINTAINED BY ANDRES QUIROZ
 *********************************************************
-
 """
 
 import tkinter as tk
 
 from pyparsing import col
-from app_logic import generate_truth_table, difference, union, intersection, symetric_difference
-
+from app_logic import generate_truth_table, difference, union, intersection, symetric_difference, series
+#import app_logic
 current_option_menu = None
 
 
@@ -82,7 +80,6 @@ def sets_widgets():
         # global set_a_entry_text, set_b_entry_text, set_c_entry_text
         """
         Executes the set action based on the parameter
-
         HERE WE REFERENCE 'app_logic.py' TO CALL LOGIC
         """
         set_a = set(set_a_entry_text.get().split(','))
@@ -188,6 +185,7 @@ def sets_widgets():
 
 
 
+
 def truth_table_generator_widgets():
     """
     Function that packs all the widgets of the truth table generator
@@ -266,6 +264,57 @@ def truth_table_generator_widgets():
     tk.Button(button_container, text="<->", width=5, height=2, command=lambda:change_text("<->")).grid(row=3, column=4)
 
 
+def series_widgets():
+    """
+    Function that packs all the widgets of the truth table generator
+    section of the app
+    """
+    global main_area, current_option_menu, main_area
+
+    if current_option_menu == "series": # we are already in the option
+        return
+
+    clear_main_area()
+    table_container = tk.Frame(main_area, width=500, height=500)
+   
+    def generate_series():
+        """"
+        Creates all entries
+        """
+        table = series(entry_text.get(), int(inf_lim), int(sup_lim)) # series
+        table_container.pack()
+        header = tk.Entry(table_container)
+        header.insert(0, entry_text)
+        header.grid(row=0, column=0)
+        # first pack the headers
+        for i in range(int(inf_lim)+1,int(sup_lim)+1):
+            header = tk.Entry(table_container)
+            header.insert(1, entry_text)
+            header.grid(row=i, column=0)
+
+    def clear_contents():
+        """
+        Limpia los contenidos del programa
+        """
+        table_container.pack_forget()
+        main_entry.delete(0, tk.END)
+        
+
+    current_option_menu = "series"
+    entry_text = tk.StringVar()
+    inf_lim = "1"
+    sup_lim = "10"
+    main_entry = tk.Entry(main_area, textvariable=entry_text)
+    main_entry.pack(pady=20)
+    
+    tk.Button(main_area, text="Generar", command=lambda:generate_series()).pack(pady=5)
+    tk.Button(main_area, text="Limpiar", command=lambda:clear_contents()).pack(pady=5)
+
+    # operator buttons
+    button_container = tk.Frame(main_area, width=500, height=500)
+    button_container.pack()
+
+
 
 def main():
     truth_table_generator_widgets()
@@ -293,12 +342,10 @@ tk.Label(headbar, text="Tablify", bg="#CCC", font=('Arial', 15)).grid(row=0,colu
 # sidebar buttons
 tk.Button(sidebar, command=truth_table_generator_widgets, text="Generador tablas de verdad", bg="green", relief="flat").grid(row=0, column=0)
 tk.Button(sidebar, command=sets_widgets, text="Operaciones con conjuntos", bg="green", relief="flat").grid(row=1, column=0)
-tk.Button(sidebar, command=relations_and_functions, text="Relaciones y Funciones", bg="green", relief="flat").grid(row=2, column=0)
+tk.Button(sidebar, command=series_widgets, text="Series y Sucesiones", bg="green", relief="flat").grid(row=2, column=0)
+tk.Button(sidebar, command=relations_and_functions, text="Relaciones y Funciones", bg="green", relief="flat").grid(row=3, column=0)
+
 
 main()
 
 root.mainloop()
-
-
-
-

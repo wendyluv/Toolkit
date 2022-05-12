@@ -1,6 +1,5 @@
 '''
 All functions and logic of the app must be defined here
-
 *********************************************************
 EDITED BY GWENDELINE OROZCO ON MAR 2 2022
 CHANGES
@@ -14,7 +13,7 @@ def generate_truth_table(expression)
 *********************************************************
 '''
 
-
+from math import prod
 
 TRUTH_TABLE_VARS = {}
 KEYS=[]
@@ -94,7 +93,6 @@ def __content_reformatter(content):
 			try:
 				out.append(__evaluator("".join(content[0-1])))
 				title.append("".join(content[0:-1]))
-
 				prev = i +1
 			except: pass
 			#content[i-1], content[i], content[i+1] = " ( "+content[i-1]+ " and " + content [i+1]+" ) ", " or "," ( not "+content[i-1]+ " and not "  + content [i+1]+" )"			
@@ -374,8 +372,34 @@ def is_transitive(set_a):
 	"""
 
 
-
-if __name__ == "__main__":
-	string = input()
-	table = generate_truth_table(string)
+# Entrega parcial Series y sucesiones	
 	
+def series(s, inf, sup):
+	a = [] 
+	rec(s, inf, sup,a)
+	return a
+
+def rec(s, inf, sup, a):
+	if inf <=  sup:
+		k= inf
+		a.append(eval(s))
+		rec(s, inf+1, sup,a)
+ 
+if __name__ == "__main__":
+	while(True):
+		inf = int(input("Ingresa Limite inferior: "))
+		sup = int(input("Ingresa Limite superior: "))
+		eq = input("Formula(k): ")
+		serie = series(eq,inf,sup)
+		
+		print("n-esimo termino de la serie")
+		for i in range(len(serie)): 
+			print(i,": ",serie[i],sep="")
+		print("Sumatoria: ", sum(serie))
+		
+		print("multiplicativo: ", prod(serie))
+		try:
+			if not(int(input("Ingrese 0 y enter para salir.\n"))):
+				break	
+		except Exception:
+			pass
