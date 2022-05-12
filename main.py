@@ -20,6 +20,50 @@ def clear_main_area():
     for widgets in main_area.winfo_children():
         widgets.destroy()
 
+def relations_and_functions():
+    """
+    Renders the widgets of the relations and operations part
+    """
+    global main_area, current_option_menu, main_area
+
+    if current_option_menu == "relations_functions": # we are already in the option
+        return
+    
+    clear_main_area()
+    current_option_menu = "relations_functions"
+    res_grid = tk.Frame(main_area, width=500, height=500)
+
+    
+    ins_label = tk.Label(main_area, text="""
+        Introduce una relacion:
+        SINTAXIS:
+        (a,b), (c,d), ...
+        """)
+    
+    ins_label.pack()
+
+    operations_grid = tk.Frame(main_area, width=500, height=500)
+
+    title_relation = tk.Label(operations_grid, text="R = {")
+    title_relation.grid(row=0, column=0)
+
+    relation_text = tk.StringVar()
+    relation_entry = tk.Entry(operations_grid, textvariable=relation_text)
+    relation_entry.grid(row=0, column=1)
+
+    end_title_relation = tk.Label(operations_grid, text="}")
+    end_title_relation.grid(row=0, column=2)
+
+    operations_grid.pack()
+
+    tk.Button(main_area, text="Reflexiva", width=20, height=2, command=lambda:is_reflexive()).pack(pady=2)
+    tk.Button(main_area, text="Simetrica", width=20, height=2, command=lambda:is_symetric()).pack(pady=2)
+    tk.Button(main_area, text="Transitiva", width=20, height=2, command=lambda:is_transitive()).pack(pady=2)
+    tk.Button(main_area, text="Dominio y Codominio", width=20, height=2, command=lambda:domain_codomain()).pack(pady=2)
+    tk.Button(main_area, text="Funcion", width=20, height=2, command=lambda:is_function()).pack(pady=2)
+
+
+
 def sets_widgets():
     """
     Function that renders the widgets of the sets operations part
@@ -249,6 +293,7 @@ tk.Label(headbar, text="Tablify", bg="#CCC", font=('Arial', 15)).grid(row=0,colu
 # sidebar buttons
 tk.Button(sidebar, command=truth_table_generator_widgets, text="Generador tablas de verdad", bg="green", relief="flat").grid(row=0, column=0)
 tk.Button(sidebar, command=sets_widgets, text="Operaciones con conjuntos", bg="green", relief="flat").grid(row=1, column=0)
+tk.Button(sidebar, command=relations_and_functions, text="Relaciones y Funciones", bg="green", relief="flat").grid(row=2, column=0)
 
 main()
 

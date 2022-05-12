@@ -240,7 +240,6 @@ def union(set_a, set_b, set_c):
 	
 	return output
 
-
 def intersection(set_a, set_b, set_c):
 
 	output = {}
@@ -261,7 +260,6 @@ def intersection(set_a, set_b, set_c):
 			return -1
 	
 	return output
-
 
 def difference(set_a, set_b, set_c):
 	
@@ -287,8 +285,6 @@ def difference(set_a, set_b, set_c):
 			output["B - C"] = __get_difference(set_b, set_c)
 	
 	return output
-
-	
 
 def symetric_difference(set_a, set_b, set_c):
 
@@ -316,7 +312,68 @@ def symetric_difference(set_a, set_b, set_c):
 	
 	return output
 
+
+# ====== Relations and Functions
+
+def convert_string_to_set(string):
+	"""
+	Converts a string of tuples into a set
+	"""
+	if " " in string: # cannot have whitespaces
+		return False
+
+	list_tuples = string.split('),')
+	new_set = set()
+	for elem in list_tuples:
+		elem_a, elem_b = elem.split(',')
+		elem_a = elem_a[1:]
+		if ')' in elem_b:
+			elem_b = elem_b[:-1]
+		
+		new_set.add((int(elem_a), int(elem_b)))
 	
+	return new_set
+
+
+def is_symetric(set_a): # will receive a set of tuples
+	"""
+	Propiedad simétrica
+
+	La propiedad simétrica establece que para todos los números reales x y y ,
+
+	si x = y , entonces y = x .
+	"""
+	for elem in set_a:
+		lst_elem = list(elem)
+		if (lst_elem[1], lst_elem[0]) not in set_a:
+			return False
+
+	return True
+
+def is_reflexive(set_a):
+	"""
+	Propieda reflexiva
+
+	La propiedad reflexiva establece que para cada número real x , x = x .
+	"""
+	for elem in set_a:
+		lst_elem = list(elem)
+		if (lst_elem[1], lst_elem[0]) not in set_a:
+			return False
+
+	return True
+
+
+def is_transitive(set_a):
+	"""
+	Propiedad transitiva
+
+	La propiedad transitiva establece que para todos los números reales x , y , y z ,
+
+	si x = y y y = z , entonces x = z .
+	"""
+
+
 
 if __name__ == "__main__":
 	string = input()
