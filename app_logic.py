@@ -333,7 +333,25 @@ def convert_string_to_set(string):
 	return new_set
 
 
-def is_symetric(set_a): # will receive a set of tuples
+def convert_single_string_to_set(string):
+	"""
+	Converts a string of tuples into a set
+	"""
+	if " " in string: # cannot have whitespaces
+		return False
+
+	new_set = set()
+	for elem in string:
+		if elem == " " or elem == ",": 
+			continue
+		
+		new_set.add(int(elem))
+
+	return new_set
+
+
+
+def is_symetric(set_a, set_pairs): # will receive a set of tuples
 	"""
 	Propiedad simétrica
 
@@ -341,28 +359,27 @@ def is_symetric(set_a): # will receive a set of tuples
 
 	si x = y , entonces y = x .
 	"""
-	for elem in set_a:
+	for elem in set_pairs:
 		lst_elem = list(elem)
 		if (lst_elem[1], lst_elem[0]) not in set_a:
 			return False
 
 	return True
 
-def is_reflexive(set_a):
+def is_reflexive(set_a, set_pairs):
 	"""
 	Propieda reflexiva
 
 	La propiedad reflexiva establece que para cada número real x , x = x .
 	"""
 	for elem in set_a:
-		lst_elem = list(elem)
-		if (lst_elem[1], lst_elem[0]) not in set_a:
+		if (elem, elem) not in set_pairs:
 			return False
 
 	return True
 
 
-def is_transitive(set_a):
+def is_transitive(set_a, set_pairs):
 	"""
 	Propiedad transitiva
 
@@ -370,6 +387,13 @@ def is_transitive(set_a):
 
 	si x = y y y = z , entonces x = z .
 	"""
+	for elems in set_pairs:
+		pair = list(elems)
+		for elem in set_a:
+			if (pair[1], elem) in set_pairs: # transitividad
+				return True
+
+	return False
 
 
 # Entrega parcial Series y sucesiones	

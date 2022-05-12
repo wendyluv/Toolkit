@@ -8,7 +8,9 @@ CREATED AND MAINTAINED BY ANDRES QUIROZ
 import tkinter as tk
 
 from pyparsing import col
-from app_logic import generate_truth_table, difference, union, intersection, symetric_difference, series
+from tkinter import messagebox
+from app_logic import generate_truth_table, difference, union, intersection, symetric_difference, series, \
+                        is_transitive, is_symetric, is_reflexive, convert_single_string_to_set, convert_string_to_set
 #import app_logic
 current_option_menu = None
 
@@ -23,44 +25,78 @@ def relations_and_functions():
     Renders the widgets of the relations and operations part
     """
     global main_area, current_option_menu, main_area
+    res_grid = tk.Frame(main_area, width=500, height=500)
+
+    def operate(method, title_text, relation_text):
+
+        # convert sets
+        single_set = convert_single_string_to_set(title_text.get())
+        relation_set = convert_string_to_set(relation_text.get())
+
+        if method == "r":
+            res = is_reflexive(single_set, relation_set)
+        elif method == "t":
+            res = is_transitive(single_set, relation_set)
+        elif method == "s":
+            res = is_symetric(single_set, relation_set)
+        # TODO: more conditionals here Gwen...
+
+        # render controls
+        if res:
+            res_lbl = tk.Label(main_area, text="True")
+        else:
+            res_lbl = tk.Label(main_area, text="False")
+        
+    
+        messagebox.showinfo("Resultado", str(res))
 
     if current_option_menu == "relations_functions": # we are already in the option
         return
     
     clear_main_area()
     current_option_menu = "relations_functions"
-    res_grid = tk.Frame(main_area, width=500, height=500)
-
+    
     
     ins_label = tk.Label(main_area, text="""
-        Introduce una relacion:
+        Introduce un conjunto y su relacion:
         SINTAXIS:
-        (a,b), (c,d), ...
+        -> a,b,c,d ...
+        -> (a,b),(c,d), ...
         """)
     
     ins_label.pack()
 
     operations_grid = tk.Frame(main_area, width=500, height=500)
 
+    title_set = tk.Label(operations_grid, text="A = {")
+    title_set.grid(row=0, column=0, pady=10)
+
+    title_text = tk.StringVar()
+    set_entry = tk.Entry(operations_grid, textvariable=title_text)
+    set_entry.grid(row=0, column=1)
+
+    end_title_set = tk.Label(operations_grid, text="}")
+    end_title_set.grid(row=0, column=2)
+
     title_relation = tk.Label(operations_grid, text="R = {")
-    title_relation.grid(row=0, column=0)
+    title_relation.grid(row=1, column=0)
 
     relation_text = tk.StringVar()
     relation_entry = tk.Entry(operations_grid, textvariable=relation_text)
-    relation_entry.grid(row=0, column=1)
+    relation_entry.grid(row=1, column=1)
 
     end_title_relation = tk.Label(operations_grid, text="}")
-    end_title_relation.grid(row=0, column=2)
+    end_title_relation.grid(row=1, column=2)
 
     operations_grid.pack()
 
-    tk.Button(main_area, text="Reflexiva", width=20, height=2, command=lambda:is_reflexive()).pack(pady=2)
-    tk.Button(main_area, text="Simetrica", width=20, height=2, command=lambda:is_symetric()).pack(pady=2)
-    tk.Button(main_area, text="Transitiva", width=20, height=2, command=lambda:is_transitive()).pack(pady=2)
-    tk.Button(main_area, text="Dominio y Codominio", width=20, height=2, command=lambda:domain_codomain()).pack(pady=2)
-    tk.Button(main_area, text="Funcion", width=20, height=2, command=lambda:is_function()).pack(pady=2)
+    tk.Button(main_area, text="Reflexiva", width=20, height=2, command=lambda:operate("r", title_text, relation_text)).pack(pady=2)
+    tk.Button(main_area, text="Simetrica", width=20, height=2, command=lambda:operate("s", title_text, relation_text)).pack(pady=2)
+    tk.Button(main_area, text="Transitiva", width=20, height=2, command=lambda:operate("t", title_text, relation_text)).pack(pady=2)
+    tk.Button(main_area, text="Dominio y Codominio", width=20, height=2, command=lambda:operate("d&c", title_text, relation_text)).pack(pady=2)
+    tk.Button(main_area, text="Funcion", width=20, height=2, command=lambda:operate("f", title_text, relation_text)).pack(pady=2)
 
-
+    # res_grid.pack()
 
 def sets_widgets():
     """
