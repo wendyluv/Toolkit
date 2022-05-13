@@ -10,7 +10,7 @@ import tkinter as tk
 from pyparsing import col
 from tkinter import messagebox
 from app_logic import generate_truth_table, difference, union, intersection, symetric_difference, series, \
-                        is_transitive, is_symetric, is_reflexive, convert_single_string_to_set, convert_string_to_set
+                        is_transitive, is_symetric, is_reflexive, convert_single_string_to_set, convert_string_to_set, is_function, domAndCo
 #import app_logic
 current_option_menu = None
 
@@ -40,9 +40,17 @@ def relations_and_functions():
         elif method == "s":
             res = is_symetric(single_set, relation_set)
         # TODO: more conditionals here Gwen...
-
+        elif method == "d&c":
+            res = domAndCo(relation_set)
+        elif method == "f":
+            res = is_function(relation_set)
+            
+        else:
+            pass
         # render controls
-        if res:
+        if type(res) == "str":
+            res_lbl = tk.Label(main_area, text=res)
+        elif res:
             res_lbl = tk.Label(main_area, text="True")
         else:
             res_lbl = tk.Label(main_area, text="False")
@@ -317,16 +325,21 @@ def series_widgets():
         """"
         Creates all entries
         """
-        table = series(entry_text.get(), int(inf_lim), int(sup_lim)) # series
+        table = series(entry_text.get(), int(inf_lim.get()), int(sup_lim.get())) # series
         table_container.pack()
         header = tk.Entry(table_container)
         header.insert(0, entry_text)
         header.grid(row=0, column=0)
         # first pack the headers
-        for i in range(int(inf_lim)+1,int(sup_lim)+1):
-            header = tk.Entry(table_container)
-            header.insert(1, entry_text)
-            header.grid(row=i, column=0)
+        
+        header = tk.Entry(table_container)
+        header.insert(0, "value")
+        header.grid(row=0, column=0)
+                # pack the content
+        for j in range(len(table)):
+                cell_content = tk.Entry(table_container)
+                cell_content.insert(0, table[j])
+                cell_content.grid(row=j+1, column=0)
 
     def clear_contents():
         """
@@ -337,12 +350,37 @@ def series_widgets():
         
 
     current_option_menu = "series"
-    entry_text = tk.StringVar()
-    inf_lim = "1"
-    sup_lim = "10"
-    main_entry = tk.Entry(main_area, textvariable=entry_text)
-    main_entry.pack(pady=20)
     
+    
+#####
+    operations_grid = tk.Frame(main_area, width=500, height=100)
+    title_set_a = tk.Label(operations_grid, text="Limite inferior = ")
+    title_set_a.grid(row=0, column=0)
+
+
+    inf_lim = tk.StringVar()
+    lower = tk.Entry(operations_grid, textvariable=inf_lim)
+    lower.grid(row=0, column=1)
+
+
+
+    title_set_b = tk.Label(operations_grid, text="Limite superior:")
+    title_set_b.grid(row=1, column=0)
+
+    sup_lim = tk.StringVar()
+    upper = tk.Entry(operations_grid, textvariable=sup_lim)
+    upper.grid(row=1, column=1)
+
+
+    title_set_c = tk.Label(operations_grid, text="Formula(k) = {")
+    title_set_c.grid(row=2, column=0)
+
+    entry_text = tk.StringVar()
+    main_entry = tk.Entry(operations_grid, textvariable=entry_text)
+    main_entry.grid(row=2, column=1)
+    operations_grid.pack()
+
+###################3
     tk.Button(main_area, text="Generar", command=lambda:generate_series()).pack(pady=5)
     tk.Button(main_area, text="Limpiar", command=lambda:clear_contents()).pack(pady=5)
 
