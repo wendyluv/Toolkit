@@ -354,9 +354,7 @@ def convert_single_string_to_set(string):
 def is_symetric(set_a, set_pairs): # will receive a set of tuples
 	"""
 	Propiedad simétrica
-
 	La propiedad simétrica establece que para todos los números reales x y y ,
-
 	si x = y , entonces y = x .
 	"""
 	for elem in set_pairs:
@@ -369,7 +367,6 @@ def is_symetric(set_a, set_pairs): # will receive a set of tuples
 def is_reflexive(set_a, set_pairs):
 	"""
 	Propieda reflexiva
-
 	La propiedad reflexiva establece que para cada número real x , x = x .
 	"""
 	for elem in set_a:
@@ -382,9 +379,7 @@ def is_reflexive(set_a, set_pairs):
 def is_transitive(set_a, set_pairs):
 	"""
 	Propiedad transitiva
-
 	La propiedad transitiva establece que para todos los números reales x , y , y z ,
-
 	si x = y y y = z , entonces x = z .
 	"""
 	for elems in set_pairs:
@@ -395,18 +390,39 @@ def is_transitive(set_a, set_pairs):
 
 	return False
 
+def domAndCo(relation_set):
+	domain = set()
+	codom = set()
+	for elem in relation_set:
+		domain.add(elem[0])
+		codom.add(elem[1])
+	
+	return "Domain: " + "".join(list( str(e) for e in domain)) + "\n" +  "Codomain: " + "".join(list( str(f) for f in codom)) + "\n"
 
+def is_function(relation_set):
+	hashed = {}
+	for elem in relation_set:
+		if(hashed.get(elem[0], False)):
+			return False
+		else:
+			hashed[elem[0]] = True 
+	return True
 # Entrega parcial Series y sucesiones	
 	
 def series(s, inf, sup):
 	a = [] 
 	rec(s, inf, sup,a)
+	s = sum(a)
+	p = prod(a)
+	a.append(s)
+	a.append(p)
+	
 	return a
 
 def rec(s, inf, sup, a):
 	if inf <=  sup:
 		k= inf
-		a.append(eval(s))
+		a.append((eval(s)))
 		rec(s, inf+1, sup,a)
  
 if __name__ == "__main__":
